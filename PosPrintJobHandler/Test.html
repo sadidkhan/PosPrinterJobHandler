@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Launch Custom URL </title>
+    <script type="text/javascript">
+        function LaunchURLScript()
+        {
+            var list = [77, 97, 109, 97, 32, 72, 97, 108, 105, 109, 10];
+            var url = "PosPrintJobHandler:"+list;
+            //window.open(url);
+            //self.focus();
+
+            var myWindow = window.open(url, "myWindow", "width=500,height=500");
+            //myWindow.close();
+
+        }
+
+    </script>
+</head>
+<body style="background-color:#D7D7D7">
+    <input type="submit" name="Launch" id="Launch" value="Launch Custom URL" onClick="LaunchURLScript()" />
+</body>
+</html>
