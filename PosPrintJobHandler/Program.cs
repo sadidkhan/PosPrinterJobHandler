@@ -20,20 +20,15 @@ namespace PosPrintJobHandler
                 var parameterString = args[0].ToString().Replace("posprintjobhandler:", "");
 
                 if (string.IsNullOrEmpty(parameterString)) return;
-                var values = parameterString.Split(',');
-                if (values.Length > 0)
-                {
-                    var bytes = values.Select(_ => _.Trim()).Select(_ => (byte)int.Parse(_)).ToArray();
-                    PrinterUtility.EscPosEpsonCommands.EscPosEpson obj = new PrinterUtility.EscPosEpsonCommands.EscPosEpson();
-                    Print(bytes, "\\\\Desktop-8h2b42n\\RONGTA");
-                }
+                byte[] bytes = Convert.FromBase64String(parameterString);
+                Print(bytes, "\\\\Desktop-8h2b42n\\RONGTA");
             }
         }
 
         public static void Print(byte[] bytes, string port)
         {
             var desktopPath = Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);
-            var filePath = desktopPath + "\\PosPrint\\tmpPrint.print";
+            var filePath = desktopPath + "\\Posprint\\tmpPrint.print";
             if (File.Exists(filePath))
                 File.Delete(filePath);
             File.WriteAllBytes(filePath, bytes);
