@@ -14,15 +14,12 @@ namespace PosPrintJobHandler
     {
         static void Main(string[] args)
         {
-            //args = new string[] { "posprintjobhandler:77, 97, 109, 97, 32, 72, 97, 108, 105, 109, 10" };
-            if (args.Length > 0)
-            {
-                var parameterString = args[0].ToString().Replace("posprintjobhandler:", "");
+            if (args.Length <= 0) return;
+            var parameterString = args[0].Replace("posprintjobhandler:", "");
 
-                if (string.IsNullOrEmpty(parameterString)) return;
-                byte[] bytes = Convert.FromBase64String(parameterString);
-                Print(bytes, "\\\\Desktop-8h2b42n\\RONGTA");
-            }
+            if (string.IsNullOrEmpty(parameterString)) return;
+            byte[] bytes = Convert.FromBase64String(parameterString);
+            Print(bytes, "\\\\Desktop-8h2b42n\\RONGTA");
         }
 
         public static void Print(byte[] bytes, string port)
