@@ -19,17 +19,28 @@ namespace PosPrintJobHandler
 
             if (string.IsNullOrEmpty(parameterString)) return;
             byte[] bytes = Convert.FromBase64String(parameterString);
-            Print(bytes, "\\\\Desktop-8h2b42n\\RONGTA");
+            Print(bytes, "\\\\" + System.Environment.MachineName + "\\RONGTA");
         }
 
         public static void Print(byte[] bytes, string port)
         {
-            var desktopPath = Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);
-            var filePath = desktopPath + "\\Posprint\\tmpPrint.print";
+            //var filePath = desktopPath + "\\Posprint\\tmpPrint.print";
+            var filePath = Path.Combine(GetFolderPath(), "tmpPrint.print");
             if (File.Exists(filePath))
                 File.Delete(filePath);
             File.WriteAllBytes(filePath, bytes);
             File.Move(filePath, port);
+        }
+
+        public static string GetFolderPath()
+        {
+            var desktopPath = Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);
+            var folderPath = Path.Combine(desktopPath, "Posprint");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            return folderPath;
         }
     }
 }
